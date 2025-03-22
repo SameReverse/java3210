@@ -1,0 +1,38 @@
+plugins {
+	id 'org.springframework.boot' version '2.6.5'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+	id 'application' 
+}
+
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'java'
+
+group = 'com.firstapp'
+repositories {
+	mavenCentral()
+}
+
+configurations { 
+		appOptics
+}
+
+applicationDefaultJvmArgs = ["-javaagent:extra/applicationinsights-agent-3.2.10.jar"]
+
+dependencies {
+	appOptics 'com.appoptics.agent.java:appoptics-agent:+'
+	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	//implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.integration:spring-integration-core'
+	implementation 'com.microsoft.azure:applicationinsights-logging-logback:2.6.4'
+	implementation 'io.micrometer:micrometer-core:1.6.1'
+	implementation 'io.opentelemetry:opentelemetry-api:1.6.0'
+}
+	
+
+configurations {
+    all {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
+}
